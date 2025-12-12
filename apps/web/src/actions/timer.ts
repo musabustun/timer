@@ -24,7 +24,10 @@ export async function createTimer(formData: FormData) {
 
     const data = {
         title,
-        targetDate: new Date(dateStr),
+        // Append +03:00 to treat input as Istanbul time, since datetime-local is timezone agnostics
+        // Date("2024-01-01T00:00") assumes server local. 
+        // Date("2024-01-01T00:00+03:00") forces explicit offset.
+        targetDate: new Date(`${dateStr}:00+03:00`),
         isRecurring,
         recurrence: isRecurring ? recurrence : null,
         imageUrl: imageUrl || null

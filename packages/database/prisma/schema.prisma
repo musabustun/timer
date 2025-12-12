@@ -40,9 +40,18 @@ model Message {
   createdAt DateTime @default(now())
 }
 
+
 model NotificationLog {
   id        String   @id @default(cuid())
   title     String
   body      String
   sentAt    DateTime @default(now())
+}
+
+model PushSubscription {
+  id        String   @id @default(cuid())
+  endpoint  String   @unique
+  p256dh    String
+  auth      String
+  createdAt DateTime @default(now())
 }

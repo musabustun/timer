@@ -1,11 +1,17 @@
-'use server'
-
 import { prisma } from 'database'
+import { sendPushNotification } from './push'
 
 export async function sendMessage(content: string, isSecret: boolean) {
-    await prisma.message.create({
+    const msg = await prisma.message.create({
         data: { content, isSecret }
     })
+
+    // Send Push Notification
+    const title = isSecret ? "Musab'dan sana mesaj var ❤️" : "Yeni Mesaj ❤️"
+    const body = isSecret ? "Okumak için tıkla..." : content
+
+    // Fire and forget push to avoid blocking response
+    sendPushNotification(body, title).catch(err => console.error("Push failed:", err))
 }
 
 export async function getUnreadMessages() {

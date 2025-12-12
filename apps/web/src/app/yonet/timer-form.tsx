@@ -79,7 +79,7 @@ export function TimerForm({ initialData }: { initialData?: any }) {
                     name="targetDate"
                     type="datetime-local"
                     required
-                    defaultValue={initialData ? new Date(new Date(initialData.targetDate).getTime() - (new Date().getTimezoneOffset() * 60000)).toISOString().slice(0, 16) : ''}
+                    defaultValue={initialData ? new Date(new Date(initialData.targetDate).getTime() + (3 * 60 * 60 * 1000)).toISOString().slice(0, 16) : ''}
                     className="bg-white/50 border border-white/10 p-3 rounded-lg focus:ring-2 focus:ring-rose-300 outline-none"
                 />
             </div>

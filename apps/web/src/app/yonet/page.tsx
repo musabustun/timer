@@ -69,7 +69,7 @@ export default async function AdminPage({
                                     <div>
                                         <div className="font-bold text-lg text-text-soft">{timer.title}</div>
                                         <div className="text-xs text-rose-400 font-mono mt-1 bg-rose-50 inline-block px-2 py-1 rounded">
-                                            {new Date(timer.targetDate).toLocaleDateString('tr-TR')}
+                                            {new Date(timer.targetDate).toLocaleDateString('tr-TR', { timeZone: 'Europe/Istanbul' })}
                                             {timer.isRecurring && (timer.recurrence === 'monthly' ? ' (Aylık)' : ' (Yıllık)')}
                                         </div>
                                     </div>
@@ -126,7 +126,7 @@ export default async function AdminPage({
                                 <div key={log.id} className="pb-2 mb-2 border-b border-rose-100 last:border-0">
                                     <div className="font-bold text-rose-500">{log.title}</div>
                                     <div className="text-zinc-600 truncate">{log.body}</div>
-                                    <div className="text-zinc-400 text-[10px] mt-1 text-right">{new Date(log.sentAt).toLocaleString('tr-TR')}</div>
+                                    <div className="text-zinc-400 text-[10px] mt-1 text-right">{new Date(log.sentAt).toLocaleString('tr-TR', { timeZone: 'Europe/Istanbul' })}</div>
                                 </div>
                             ))}
                             {logs.length === 0 && <div className="text-center text-zinc-400 py-4">Henüz kayıt yok.</div>}

@@ -16,7 +16,8 @@ export function MessageCenter() {
 
                 if (content) {
                     await sendMessage(content, isSecret)
-                    await logNotification(isSecret ? 'Gizli Mesaj' : 'Mesaj', isSecret ? 'Gizli bir mesaj gönderildi.' : content)
+                    // Log the actual content for admin reference, but mark as Secret
+                    await logNotification(isSecret ? 'Gizli Mesaj' : 'Mesaj', isSecret ? `[GİZLİ] ${content}` : content)
                     ref.current?.reset()
                     alert('Mesaj Gönderildi!')
                 }
