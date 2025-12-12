@@ -78,6 +78,20 @@ export default async function AdminPage({
                                     )}
                                 </div>
 
+                                {/* Show Notes Counter/Details in Admin */}
+                                {timer.notes && timer.notes.length > 0 && (
+                                    <div className="bg-white/50 rounded-lg p-2 text-xs border border-rose-100">
+                                        <div className="font-semibold text-rose-400 mb-1">Bırakılan Notlar ({timer.notes.length})</div>
+                                        <div className="space-y-1 max-h-24 overflow-y-auto">
+                                            {timer.notes.map(note => (
+                                                <div key={note.id} className="text-zinc-600 border-b border-dashed border-rose-50 last:border-0 pb-1">
+                                                    {note.type === 'TEXT' ? note.content : `[Medya: ${note.type}]`}
+                                                </div>
+                                            ))}
+                                        </div>
+                                    </div>
+                                )}
+
                                 <div className="flex justify-end gap-2 pt-2 border-t border-dashed border-rose-100">
                                     <Link
                                         href={`/yonet?editId=${timer.id}`}
