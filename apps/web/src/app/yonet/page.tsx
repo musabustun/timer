@@ -3,7 +3,7 @@ import { getAccessCode, updateAccessCode } from '@/actions/settings'
 import { TimerForm } from './timer-form'
 import { deleteTimer } from '@/actions/timer'
 import { MessageCenter } from './MessageCenter'
-import { getNotificationLogs } from '@/actions/log'
+import { getNotificationLogs, clearNotificationLogs } from '@/actions/log'
 import type { Metadata } from 'next'
 
 import Link from 'next/link'
@@ -130,7 +130,16 @@ export default async function AdminPage({
                     </section>
 
                     <section>
-                        <h2 className="text-xl font-semibold mb-4 text-text-soft">Son Bildirimler</h2>
+                        <div className="flex justify-between items-center mb-4">
+                            <h2 className="text-xl font-semibold text-text-soft">Son Bildirimler</h2>
+                            {logs.length > 0 && (
+                                <form action={clearNotificationLogs}>
+                                    <button className="text-xs text-rose-400 hover:text-rose-600 underline cursor-pointer">
+                                        Temizle
+                                    </button>
+                                </form>
+                            )}
+                        </div>
                         <div className="space-y-2 bg-white/40 p-4 rounded-xl border border-white/20 h-64 overflow-y-auto font-mono text-xs">
                             {logs.map(log => (
                                 <div key={log.id} className="pb-2 mb-2 border-b border-rose-100 last:border-0">
