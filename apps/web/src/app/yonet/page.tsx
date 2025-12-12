@@ -4,8 +4,18 @@ import { TimerForm } from './timer-form'
 import { deleteTimer } from '@/actions/timer'
 import { MessageCenter } from './MessageCenter'
 import { getNotificationLogs } from '@/actions/log'
+import type { Metadata } from 'next'
 
 import Link from 'next/link'
+
+export const metadata: Metadata = {
+    title: 'Yönetim Paneli',
+    description: 'Mesajları yönet ve yeni mesaj gönder.',
+    robots: {
+        index: false,
+        follow: false,
+    },
+}
 
 export default async function AdminPage({
     searchParams,
@@ -64,7 +74,7 @@ export default async function AdminPage({
                     <h2 className="text-xl font-semibold text-text-soft">Kayıtlı Anılar ({timers.length})</h2>
                     <div className="space-y-3 h-[600px] overflow-y-auto pr-2 custom-scrollbar">
                         {timers.map(timer => (
-                            <div key={timer.id} className={`group p-4 border rounded-xl transition-all shadow-sm hover:shadow-md flex flex-col gap-3 ${timer.id === editId ? 'bg-rose-50 border-rose-300 ring-2 ring-rose-200' : 'bg-white/60 border-white/50 hover:bg-white'}`}>
+                            <div key={timer.id} className={`group p - 4 border rounded - xl transition - all shadow - sm hover: shadow - md flex flex - col gap - 3 ${timer.id === editId ? 'bg-rose-50 border-rose-300 ring-2 ring-rose-200' : 'bg-white/60 border-white/50 hover:bg-white'} `}>
                                 <div className="flex justify-between items-start">
                                     <div>
                                         <div className="font-bold text-lg text-text-soft">{timer.title}</div>
@@ -94,7 +104,7 @@ export default async function AdminPage({
 
                                 <div className="flex justify-end gap-2 pt-2 border-t border-dashed border-rose-100">
                                     <Link
-                                        href={`/yonet?editId=${timer.id}`}
+                                        href={`/ yonet ? editId = ${timer.id} `}
                                         scroll={false}
                                         className="text-blue-400 hover:text-blue-500 text-xs font-semibold px-2 py-1 hover:bg-blue-50 rounded transition-colors"
                                     >

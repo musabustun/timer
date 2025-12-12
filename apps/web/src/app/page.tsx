@@ -1,4 +1,14 @@
 import { cookies } from 'next/headers'
+import type { Metadata } from 'next'
+
+export const metadata: Metadata = {
+  title: 'Zamanlayıcılarım',
+  description: 'Geri sayımlarınızı oluşturun, yönetin ve özel anlarınızı takip edin.',
+  alternates: {
+    canonical: '/',
+  },
+}
+
 import { AccessCodeForm } from '@/components/AccessCodeForm'
 import { getTimers } from '@/actions/timer'
 import { TimerList } from '@/components/TimerList'
