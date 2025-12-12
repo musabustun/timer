@@ -18,6 +18,7 @@ model Timer {
   targetDate  DateTime
   isRecurring Boolean  @default(false)
   recurrence  String?
+  imageUrl    String?
   notes       Note[]
   createdAt   DateTime @default(now())
 }
@@ -28,5 +29,13 @@ model Note {
   content   String
   timerId   String
   timer     Timer    @relation(fields: [timerId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+}
+
+model Message {
+  id        String   @id @default(cuid())
+  content   String
+  isSecret  Boolean  @default(false)
+  isRead    Boolean  @default(false)
   createdAt DateTime @default(now())
 }

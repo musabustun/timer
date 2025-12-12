@@ -2,6 +2,7 @@ import { getTimers } from '@/actions/timer'
 import { getAccessCode, updateAccessCode } from '@/actions/settings'
 import { TimerForm } from './timer-form'
 import { deleteTimer } from '@/actions/timer'
+import { MessageCenter } from './MessageCenter'
 
 export default async function AdminPage() {
     const timers = await getTimers()
@@ -29,6 +30,11 @@ export default async function AdminPage() {
                         Update
                     </button>
                 </form>
+            </section>
+
+            <section className="space-y-4">
+                <h2 className="text-2xl font-semibold">Actions</h2>
+                <MessageCenter />
             </section>
 
             <section className="grid md:grid-cols-2 gap-8">

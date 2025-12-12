@@ -13,7 +13,9 @@ export async function getTimers() {
 export async function createTimer(formData: FormData) {
     const title = formData.get('title') as string
     const dateStr = formData.get('targetDate') as string
-    const isRecurring = formData.get('isRecurring') === 'on'
+    const recurrence = formData.get('recurrence') as string
+    const imageUrl = formData.get('imageUrl') as string
+    const isRecurring = !!recurrence && recurrence !== 'none'
 
     if (!title || !dateStr) {
         throw new Error('Missing title or date')
@@ -24,7 +26,8 @@ export async function createTimer(formData: FormData) {
             title,
             targetDate: new Date(dateStr),
             isRecurring,
-            recurrence: isRecurring ? 'yearly' : null // Default to yearly for now if recurring
+            recurrence: isRecurring ? recurrence : null,
+            imageUrl: imageUrl || null
         }
     })
 
