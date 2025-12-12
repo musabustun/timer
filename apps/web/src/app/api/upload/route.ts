@@ -31,7 +31,9 @@ export async function POST(request: NextRequest) {
         // Write file
         await writeFile(filepath, buffer)
 
-        const publicPath = `/uploads/${filename}`
+        // Use the dynamic API route we created to serve the file
+        // This ensures files added at runtime are servable even if Next.js static serving misses them
+        const publicPath = `/api/uploads/${filename}`
         return NextResponse.json({ success: true, path: publicPath })
     } catch (error) {
         console.error('Error uploading file:', error)
