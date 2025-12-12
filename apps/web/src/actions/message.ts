@@ -13,7 +13,7 @@ export async function sendMessage(content: string, isSecret: boolean) {
     const body = isSecret ? "Okumak için tıkla..." : content
 
     // Fire and forget push to avoid blocking response
-    const url = isSecret ? `/message/${msg.id}` : '/yonet'
+    const url = isSecret ? `/mesaj/${msg.id}` : '/yonet'
     sendPushNotification(body, title, url).catch(err => console.error("Push failed:", err))
 }
 

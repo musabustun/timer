@@ -8,7 +8,8 @@ self.addEventListener('push', function (event) {
             vibrate: [100, 50, 100],
             data: {
                 dateOfArrival: Date.now(),
-                primaryKey: 1
+                primaryKey: 1,
+                url: data.url
             },
             actions: [
                 {
