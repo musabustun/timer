@@ -1,10 +1,19 @@
 'use client'
 
 import { verifyAccessCode } from '@/actions/public-auth'
-import { useActionState } from 'react'
+import { useActionState, useEffect } from 'react'
 
 export function AccessCodeForm() {
     const [state, action, isPending] = useActionState(verifyAccessCode, null)
+
+    // Handle successful login with client-side redirect
+    // This avoids issues with stale Server Action IDs on cached pages (like iPad Safari)
+    useEffect(() => {
+        if (state?.success) {
+            // Force a full page reload to ensure fresh state
+            window.location.href = '/'
+        }
+    }, [state])
 
     return (
 
