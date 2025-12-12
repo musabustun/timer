@@ -50,7 +50,7 @@ export const metadata: Metadata = {
     images: ['/og-image.png'],
   },
   icons: {
-    icon: '/favicon.ico',
+    icon: '/heart.svg',
   },
   manifest: "/manifest.json",
 };
