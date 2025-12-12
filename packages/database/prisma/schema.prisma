@@ -1,0 +1,32 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model Setting {
+  key   String @id
+  value String
+}
+
+model Timer {
+  id          String   @id @default(cuid())
+  title       String
+  targetDate  DateTime
+  isRecurring Boolean  @default(false)
+  recurrence  String?
+  notes       Note[]
+  createdAt   DateTime @default(now())
+}
+
+model Note {
+  id        String   @id @default(cuid())
+  type      String
+  content   String
+  timerId   String
+  timer     Timer    @relation(fields: [timerId], references: [id], onDelete: Cascade)
+  createdAt DateTime @default(now())
+}
