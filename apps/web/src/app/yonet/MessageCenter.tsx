@@ -1,48 +1,47 @@
 'use client'
 
 import { sendMessage } from '@/actions/message'
+import { logNotification } from '@/actions/timer'
 import { useRef } from 'react'
 
 export function MessageCenter() {
     const ref = useRef<HTMLFormElement>(null)
 
     return (
-        <div className="p-6 border border-white/10 rounded-xl bg-white/5 backdrop-blur-md space-y-4 shadow-xl">
-            <h2 className="text-xl font-semibold bg-gradient-to-r from-rose-soft to-pink-soft bg-clip-text text-transparent">
-                Send Notification
-            </h2>
-            <form
-                ref={ref}
-                action={async (formData) => {
-                    await sendMessage(
-                        formData.get('content') as string,
-                        formData.get('isSecret') === 'on'
-                    )
+        <form
+            ref={ref}
+            action={async (formData) => {
+                const content = formData.get('content') as string
+                const isSecret = formData.get('isSecret') === 'on'
+
+                if (content) {
+                    await sendMessage(content, isSecret)
+                    await logNotification(isSecret ? 'Gizli Mesaj' : 'Mesaj', isSecret ? 'Gizli bir mesaj gönderildi.' : content)
                     ref.current?.reset()
-                    alert('Message Sent!')
-                }}
-                className="space-y-4"
-            >
-                <div>
-                    <label className="text-sm text-zinc-400">Message Content</label>
-                    <textarea
-                        name="content"
-                        required
-                        rows={3}
-                        className="w-full bg-black/40 border border-white/10 p-3 rounded-lg focus:ring-2 focus:ring-rose-soft outline-none transition-all mt-1"
-                        placeholder="I love you..."
-                    />
-                </div>
+                    alert('Mesaj Gönderildi!')
+                }
+            }}
+            className="p-6 border border-white/20 rounded-xl bg-white/40 shadow-sm backdrop-blur-sm space-y-4"
+        >
+            <div className="flex flex-col gap-2">
+                <label className="text-xs text-zinc-500 font-medium uppercase tracking-wider">Mesaj İçeriği</label>
+                <textarea
+                    name="content"
+                    required
+                    rows={3}
+                    className="bg-white/50 border border-rose-100 p-3 rounded-lg w-full outline-none focus:ring-1 focus:ring-rose-300 transition-all placeholder:text-zinc-400"
+                    placeholder="Seni seviyorum..."
+                />
+            </div>
 
-                <div className="flex items-center gap-2 cursor-pointer">
-                    <input type="checkbox" name="isSecret" id="isSecret" className="w-4 h-4 accent-rose-500 rounded" />
-                    <label htmlFor="isSecret" className="text-sm cursor-pointer select-none">Secret Message (Click to reveal)</label>
-                </div>
+            <div className="flex items-center gap-2">
+                <input type="checkbox" name="isSecret" id="secret" className="w-4 h-4 text-rose-500 rounded focus:ring-rose-400" />
+                <label htmlFor="secret" className="text-sm text-zinc-600 cursor-pointer select-none">Gizli Mesaj (Zarf animasyonu ile açılır)</label>
+            </div>
 
-                <button className="w-full bg-cream-100 text-text-soft px-4 py-2 rounded font-medium hover:bg-white transition-colors">
-                    Send Notification
-                </button>
-            </form>
-        </div>
+            <button className="w-full bg-rose-soft text-white py-3 rounded-lg hover:bg-rose-600 transition-colors shadow-lg shadow-rose-200 font-medium">
+                Gönder
+            </button>
+        </form>
     )
 }

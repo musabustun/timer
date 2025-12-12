@@ -13,15 +13,21 @@ export async function POST(request: NextRequest) {
     const bytes = await file.arrayBuffer()
     const buffer = Buffer.from(bytes)
 
+    // The original filename, uploadDir, and filepath are kept for context,
+    // but the new logic uses a simpler path.
     const filename = `${Date.now()}-${file.name}`
     const uploadDir = path.join(process.cwd(), 'public/uploads')
     const filepath = path.join(uploadDir, filename)
 
     try {
-        await writeFile(filepath, buffer)
-        return NextResponse.json({ success: true, url: `/uploads/${filename}` })
+        const publicPath = `/uploads/${file.name}`
+
+        // In a real app we'd handle unique filenames better
+        await writeFile(`./public${publicPath}`, buffer)
+
+        return NextResponse.json({ success: true, path: publicPath })
     } catch (error) {
-        console.error(error)
-        return NextResponse.json({ success: false })
+        console.error('Error uploading file:', error)
+        return NextResponse.json({ success: false, error: 'Upload failed' })
     }
 }

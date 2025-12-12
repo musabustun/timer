@@ -16,22 +16,39 @@ export async function createTimer(formData: FormData) {
     const recurrence = formData.get('recurrence') as string
     const imageUrl = formData.get('imageUrl') as string
     const isRecurring = !!recurrence && recurrence !== 'none'
+    const id = formData.get('id') as string
 
     if (!title || !dateStr) {
         throw new Error('Missing title or date')
     }
 
-    await prisma.timer.create({
-        data: {
-            title,
-            targetDate: new Date(dateStr),
-            isRecurring,
-            recurrence: isRecurring ? recurrence : null,
-            imageUrl: imageUrl || null
-        }
-    })
+    const data = {
+        title,
+        targetDate: new Date(dateStr),
+        isRecurring,
+        recurrence: isRecurring ? recurrence : null,
+        imageUrl: imageUrl || null
+    }
+
+    if (id) {
+        await prisma.timer.update({
+            where: { id },
+            data
+        })
+    } else {
+        await prisma.timer.create({
+            data
+        })
+    }
 
     revalidatePath('/')
+    revalidatePath('/yonet')
+}
+
+export async function logNotification(title: string, body: string) {
+    await prisma.notificationLog.create({
+        data: { title, body }
+    })
     revalidatePath('/yonet')
 }
 

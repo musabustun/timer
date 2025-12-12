@@ -3,7 +3,10 @@
     "version": "1.0.0",
     "type": "module",
     "main": "src/index.ts",
-    "types": "src/index.ts",
+    "scripts": {
+        "build": "echo 'no build step needed for shared'",
+        "dev": "echo 'no dev step needed for shared'"
+    },
     "devDependencies": {
         "typescript": "^5.0.0"
     }

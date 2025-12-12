@@ -4,7 +4,10 @@
     "type": "module",
     "main": "src/index.tsx",
     "types": "src/index.tsx",
-    "scripts": {},
+    "scripts": {
+        "build": "echo 'no build step needed for ui'",
+        "dev": "echo 'no dev step needed for ui'"
+    },
     "peerDependencies": {
         "react": "^19.0.0",
         "react-dom": "^19.0.0"

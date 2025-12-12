@@ -39,3 +39,10 @@ model Message {
   isRead    Boolean  @default(false)
   createdAt DateTime @default(now())
 }
+
+model NotificationLog {
+  id        String   @id @default(cuid())
+  title     String
+  body      String
+  sentAt    DateTime @default(now())
+}

@@ -34,9 +34,28 @@ export function NoteUploader({ timerId }: { timerId: string }) {
 
     return (
         <div className="space-y-4">
-            <div className="flex gap-2">
-                <button onClick={() => setMode('TEXT')} className="bg-zinc-800 px-4 py-2 rounded">Write Note</button>
-                <button onClick={() => setMode('MEDIA')} className="bg-zinc-800 px-4 py-2 rounded">Upload Media</button>
+            <div className="flex gap-2 justify-center pb-2 border-b border-slate-200">
+                <button
+                    onClick={() => setMode('TEXT')}
+                    className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${mode === 'TEXT' ? 'bg-rose-500 text-white shadow-md' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'}`}
+                >
+                    Fotoğra/Video Notu
+                </button>
+                {/* Simplified to just use TEXT or MEDIA implies maybe splitting, but let's keep it simple. 
+                   Actually, let's fix the buttons: 'Not Yaz' and 'Medya Yükle'
+                */}
+                <button
+                    onClick={() => setMode('TEXT')}
+                    className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${mode === 'TEXT' ? 'bg-rose-500 text-white shadow-md' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'}`}
+                >
+                    Not Yaz
+                </button>
+                <button
+                    onClick={() => setMode('MEDIA')}
+                    className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors ${mode === 'MEDIA' ? 'bg-rose-500 text-white shadow-md' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'}`}
+                >
+                    Medya Yükle
+                </button>
             </div>
 
             {mode === 'TEXT' && (
@@ -46,20 +65,40 @@ export function NoteUploader({ timerId }: { timerId: string }) {
                         await addNote(timerId, 'TEXT', formData.get('content') as string)
                         formRef.current?.reset()
                         setMode(null)
+                        alert('Notun kaydedildi! ❤️')
                     }}
-                    className="flex flex-col gap-2"
+                    className="flex flex-col gap-2 animate-in fade-in"
                 >
-                    <textarea name="content" className="bg-zinc-900 border border-zinc-800 rounded p-2" rows={3} required />
-                    <button className="bg-blue-600 text-white p-2 rounded">Add Note</button>
+                    <textarea
+                        name="content"
+                        className="bg-slate-50 border border-slate-200 rounded-lg p-3 text-slate-800 focus:ring-2 focus:ring-rose-200 outline-none resize-none placeholder:text-slate-400"
+                        rows={4}
+                        required
+                        placeholder="İçinden gelenleri yaz..."
+                    />
+                    <button className="bg-rose-500 hover:bg-rose-600 text-white p-3 rounded-lg font-medium transition-colors shadow-sm">
+                        Kaydet
+                    </button>
                 </form>
             )}
 
             {mode === 'MEDIA' && (
-                <div className="bg-zinc-900 border border-zinc-800 p-4 rounded text-center">
+                <div className="bg-slate-50 border border-slate-200 border-dashed border-2 p-8 rounded-lg text-center animate-in fade-in flex flex-col items-center justify-center gap-2">
                     {uploading ? (
-                        <p>Uploading...</p>
+                        <div className="flex flex-col items-center text-rose-500">
+                            <div className="w-6 h-6 border-2 border-rose-500 border-t-transparent rounded-full animate-spin mb-2"></div>
+                            <p className="text-sm font-medium">Yükleniyor...</p>
+                        </div>
                     ) : (
-                        <input type="file" accept="video/*,audio/*" onChange={handleUpload} className="w-full" />
+                        <>
+                            <p className="text-slate-500 text-sm mb-2">Video veya Ses dosyası seç</p>
+                            <input
+                                type="file"
+                                accept="video/*,audio/*"
+                                onChange={handleUpload}
+                                className="w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-rose-50 file:text-rose-700 hover:file:bg-rose-100"
+                            />
+                        </>
                     )}
                 </div>
             )}

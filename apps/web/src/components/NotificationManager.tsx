@@ -27,7 +27,7 @@ export function NotificationManager({ timers }: { timers: any[] }) {
                 if (hours > 0 && hours < 24) {
                     const key = `notified-${timer.id}-${target.getDate()}`
                     if (!localStorage.getItem(key)) {
-                        new Notification(timer.title, { body: 'Less than 24 hours remaining!' })
+                        new Notification(timer.title, { body: '24 Saatten az kaldı! ❤️' })
                         localStorage.setItem(key, 'true')
                     }
                 }
@@ -73,7 +73,7 @@ export function NotificationManager({ timers }: { timers: any[] }) {
                     onClick={() => Notification.requestPermission()}
                     className="bg-rose-soft text-white px-4 py-2 rounded-full shadow-lg text-sm hover:scale-105 transition-transform"
                 >
-                    Enable Notifications
+                    Bildirimleri Aç
                 </button>
             )}
         </div>

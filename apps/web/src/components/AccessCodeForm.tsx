@@ -13,28 +13,28 @@ export function AccessCodeForm() {
                     <h1 className="text-4xl font-bold tracking-tight bg-gradient-to-r from-blue-400 to-purple-600 bg-clip-text text-transparent">
                         Welcome
                     </h1>
-                    <p className="text-zinc-400">Enter access code to view timers</p>
+                    <h1 className="text-3xl font-bold bg-gradient-to-r from-rose-soft to-pink-soft bg-clip-text text-transparent animate-pulse">
+                        Krem Anılar ❤️
+                    </h1>
+                    <form action={action} className="flex flex-col gap-4 w-full max-w-xs animate-in slide-in-from-bottom-4 duration-1000">
+                        <input
+                            type="text"
+                            name="code"
+                            placeholder="Erişim Kodu..."
+                            className="bg-white/50 border border-rose-200 text-center p-3 rounded-full focus:ring-2 focus:ring-rose-300 outline-none transition-all placeholder:text-rose-300/50"
+                        />
+                        <button
+                            disabled={isPending}
+                            className="bg-gradient-to-r from-rose-soft to-pink-soft text-white p-3 rounded-full font-medium hover:scale-105 transition-transform disabled:opacity-50 shadow-lg shadow-rose-200/50"
+                        >
+                            {isPending ? 'Kontrol Ediliyor...' : 'Giriş Yap'}
+                        </button>
+                        {state?.error && (
+                            <p className="text-red-400 text-sm text-center animate-bounce">{state.error}</p>
+                        )}
+                    </form>
                 </div>
-
-                <form action={action} className="space-y-4">
-                    <input
-                        type="text"
-                        name="code"
-                        placeholder="Access Code"
-                        className="w-full bg-zinc-900 border border-zinc-800 rounded-lg p-4 text-center text-xl tracking-widest placeholder:tracking-normal focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all"
-                        autoComplete="off"
-                    />
-                    {state?.error && (
-                        <p className="text-red-500 text-sm text-center">{state.error}</p>
-                    )}
-                    <button
-                        disabled={isPending}
-                        className="w-full bg-blue-600 hover:bg-blue-500 disabled:opacity-50 text-white font-medium p-4 rounded-lg transition-colors"
-                    >
-                        {isPending ? 'Checking...' : 'Enter'}
-                    </button>
-                </form>
             </div>
-        </div>
+        </div >
     )
 }
