@@ -15,16 +15,23 @@ export async function POST(request: NextRequest) {
 
     // The original filename, uploadDir, and filepath are kept for context,
     // but the new logic uses a simpler path.
-    const filename = `${Date.now()}-${file.name}`
-    const uploadDir = path.join(process.cwd(), 'public/uploads')
-    const filepath = path.join(uploadDir, filename)
-
     try {
-        const publicPath = `/uploads/${file.name}`
+        const uploadDir = path.join(process.cwd(), 'public/uploads')
 
-        // In a real app we'd handle unique filenames better
-        await writeFile(`./public${publicPath}`, buffer)
+        // Ensure directory exists
+        const { mkdir } = await import('fs/promises')
+        await mkdir(uploadDir, { recursive: true })
 
+        const filename = `${Date.now()}-${file.name.replace(/[^a-zA-Z0-9.-]/g, '')}`
+        const filepath = path.join(uploadDir, filename)
+
+        console.log('Uploading to:', filepath)
+        console.log('CWD:', process.cwd())
+
+        // Write file
+        await writeFile(filepath, buffer)
+
+        const publicPath = `/uploads/${filename}`
         return NextResponse.json({ success: true, path: publicPath })
     } catch (error) {
         console.error('Error uploading file:', error)

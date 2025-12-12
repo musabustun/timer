@@ -3,7 +3,7 @@
 import { prisma } from 'database'
 import { revalidatePath } from 'next/cache'
 
-export async function addNote(timerId: string, type: 'TEXT' | 'AUDIO' | 'VIDEO', content: string) {
+export async function addNote(timerId: string, type: 'TEXT' | 'AUDIO' | 'VIDEO' | 'IMAGE', content: string) {
     await prisma.note.create({
         data: {
             timerId,

@@ -13,7 +13,9 @@ export function NoteUploader({ timerId }: { timerId: string }) {
         setUploading(true)
 
         const file = e.target.files[0]
-        const type = file.type.startsWith('video') ? 'VIDEO' : 'AUDIO'
+        let type: 'VIDEO' | 'AUDIO' | 'IMAGE' = 'AUDIO'
+        if (file.type.startsWith('video')) type = 'VIDEO'
+        else if (file.type.startsWith('image')) type = 'IMAGE'
 
         const formData = new FormData()
         formData.append('file', file)
@@ -91,10 +93,10 @@ export function NoteUploader({ timerId }: { timerId: string }) {
                         </div>
                     ) : (
                         <>
-                            <p className="text-slate-500 text-sm mb-2">Video veya Ses dosyası seç</p>
+                            <p className="text-slate-500 text-sm mb-2">Fotoğraf, Video veya Ses dosyası seç</p>
                             <input
                                 type="file"
-                                accept="video/*,audio/*"
+                                accept="video/*,audio/*,image/*"
                                 onChange={handleUpload}
                                 className="w-full text-sm text-slate-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-rose-50 file:text-rose-700 hover:file:bg-rose-100"
                             />
