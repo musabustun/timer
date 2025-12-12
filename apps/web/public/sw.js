@@ -30,8 +30,17 @@ self.addEventListener('notificationclick', function (event) {
         clients.matchAll({
             type: 'window'
         }).then(function (clientList) {
+            const urlToOpen = event.notification.data.url || '/yonet'
+
+            // If a window is already open, focus it and navigate
+            for (const client of clientList) {
+                if (client.url === urlToOpen && 'focus' in client) {
+                    return client.focus()
+                }
+            }
+
             if (clients.openWindow) {
-                return clients.openWindow('/yonet') // Or a specific URL from data
+                return clients.openWindow(urlToOpen)
             }
         })
     )

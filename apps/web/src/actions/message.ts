@@ -1,3 +1,5 @@
+'use server'
+
 import { prisma } from 'database'
 import { sendPushNotification } from './push'
 
@@ -11,7 +13,8 @@ export async function sendMessage(content: string, isSecret: boolean) {
     const body = isSecret ? "Okumak için tıkla..." : content
 
     // Fire and forget push to avoid blocking response
-    sendPushNotification(body, title).catch(err => console.error("Push failed:", err))
+    const url = isSecret ? `/message/${msg.id}` : '/yonet'
+    sendPushNotification(body, title, url).catch(err => console.error("Push failed:", err))
 }
 
 export async function getUnreadMessages() {

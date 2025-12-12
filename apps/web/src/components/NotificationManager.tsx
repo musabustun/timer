@@ -22,23 +22,23 @@ export function NotificationManager({ timers }: { timers: any[] }) {
                     console.log('SW registered:', registration)
 
                     // Check subscription
-                    const existingSub = await registration.pushManager.getSubscription()
-                    if (!existingSub) {
+                    let subscription = await registration.pushManager.getSubscription()
+                    if (!subscription) {
                         // Get key from server
                         const { getVapidPublicKey } = await import('@/actions/push')
                         const publicKey = await getVapidPublicKey()
 
                         const convertedVapidKey = urlBase64ToUint8Array(publicKey)
-                        const subscription = await registration.pushManager.subscribe({
+                        subscription = await registration.pushManager.subscribe({
                             userVisibleOnly: true,
                             applicationServerKey: convertedVapidKey
                         })
-
-                        // Save to server
-                        const { subscribeUser } = await import('@/actions/push')
-                        await subscribeUser(JSON.parse(JSON.stringify(subscription)))
-                        console.log('User Subscribed')
                     }
+
+                    // Always save/update to server to ensure it exists in DB
+                    const { subscribeUser } = await import('@/actions/push')
+                    await subscribeUser(JSON.parse(JSON.stringify(subscription)))
+                    console.log('User Subscribed/Synced')
                 } catch (error) {
                     console.error('SW Error:', error)
                 }

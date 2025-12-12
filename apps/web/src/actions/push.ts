@@ -43,7 +43,7 @@ export async function subscribeUser(sub: any) {
     return { success: true }
 }
 
-export async function sendPushNotification(payload: string, title: string = 'Yeni Bildirim') {
+export async function sendPushNotification(payload: string, title: string = 'Yeni Bildirim', url: string = '/yonet') {
     const subscriptions = await prisma.pushSubscription.findMany()
 
     const results = await Promise.allSettled(
@@ -57,7 +57,7 @@ export async function sendPushNotification(payload: string, title: string = 'Yen
                             auth: sub.auth
                         }
                     },
-                    JSON.stringify({ title, body: payload })
+                    JSON.stringify({ title, body: payload, url })
                 )
             } catch (error: any) {
                 if (error.statusCode === 404 || error.statusCode === 410) {
