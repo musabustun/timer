@@ -14,7 +14,7 @@ export function TimerList({ timers }: { timers: any[] }) {
     }
 
     return (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 auto-rows-max">
+        <div className="flex flex-col gap-6 max-w-2xl mx-auto w-full">
             {timers.map(timer => (
                 <TimerCard key={timer.id} timer={timer} />
             ))}
